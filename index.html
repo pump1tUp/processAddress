@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ethereum Address Formatter</title>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        width: 50%;
+        margin: auto;
+    }
+    textarea {
+        width: calc(100% - 20px);
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+    input[type="text"] {
+        width: calc(100% - 22px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        font-size: 16px;
+    }
+    button {
+        display: block;
+        background: #28a745;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    button:hover {
+        background: #218838;
+    }
+    .address-count {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <textarea id="inputArea" placeholder="请输入以太坊地址..." rows="10"></textarea><br>
+    <input type="text" id="numberInput" placeholder="请输入数字" />
+    <button onclick="processAddresses()">处理地址</button><br>
+    <div class="address-count" id="addressCount"></div>
+    <textarea id="outputArea" rows="10"></textarea>
+</div>
+
+<script>
+function processAddresses() {
+    const inputArea = document.getElementById('inputArea');
+    const numberInput = document.getElementById('numberInput');
+    const outputArea = document.getElementById('outputArea');
+    const addressCount = document.getElementById('addressCount');
+    
+    outputArea.value = "";
+    
+    const number = numberInput.value;
+    const inputText = inputArea.value;
+    const ethAddressPattern = /0x[a-fA-F0-9]{40}/g;
+    const addresses = inputText.match(ethAddressPattern) || [];
+    
+    addressCount.textContent = `找到了 ${addresses.length} 个以太坊地址。`;
+    
+    addresses.forEach(address => {
+        const outputText = number ? `${address},${number}` : address;
+        outputArea.value += outputText + '\n';
+    });
+}
+</script>
+</body>
+</html>
